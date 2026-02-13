@@ -132,43 +132,70 @@ function launchMultipleFireworks() {
 }
 
 // ========== LÓGICA DEL BOTÓN "NO" ==========
+function clamp(v, min, max) {
+  return Math.min(Math.max(v, min), max);
+}
 
 function moveNoButton() {
-    const containerRect = container.getBoundingClientRect();
-    const btnRect = noBtn.getBoundingClientRect();
-    
-    let x, y;
-    let attempts = 0;
-    const maxAttempts = 20;
-    
-    do {
-        x = Math.random() * (window.innerWidth - btnRect.width - 40) + 20;
-        y = Math.random() * (window.innerHeight - btnRect.height - 40) + 20;
-        attempts++;
-    } while (
-        attempts < maxAttempts &&
-        x > containerRect.left - 150 &&
-        x < containerRect.right + 150 &&
-        y > containerRect.top - 150 &&
-        y < containerRect.bottom + 150
+  const containerRect = container.getBoundingClientRect();
+  const btnRect = noBtn.getBoundingClientRect();
+
+  const safe = 12;              // separación mínima del borde de pantalla
+  const playAreaMargin = 50;    // área alrededor del contenedor
+
+  // Área candidata (alrededor del contenedor)
+  let left   = containerRect.left - playAreaMargin;
+  let right  = containerRect.right + playAreaMargin;
+  let top    = containerRect.top - playAreaMargin;
+  let bottom = containerRect.bottom + playAreaMargin;
+
+  // Clamp a pantalla teniendo en cuenta el tamaño del botón
+  left   = clamp(left,  safe, window.innerWidth  - safe - btnRect.width);
+  right  = clamp(right, left + 1, window.innerWidth  - safe); // right >= left
+  top    = clamp(top,   safe, window.innerHeight - safe - btnRect.height);
+  bottom = clamp(bottom, top + 1, window.innerHeight - safe); // bottom >= top
+
+  // Rango final donde puede ubicarse el TOP-LEFT del botón
+  const xMin = left;
+  const xMax = Math.max(left, right - btnRect.width);
+  const yMin = top;
+  const yMax = Math.max(top, bottom - btnRect.height);
+
+  let x = xMin, y = yMin;
+  let attempts = 0;
+  const maxAttempts = 40;
+
+  do {
+    x = xMin + Math.random() * (xMax - xMin);
+    y = yMin + Math.random() * (yMax - yMin);
+    attempts++;
+
+    const isOverContainer = (
+      x + btnRect.width  > containerRect.left - 20 &&
+      x < containerRect.right + 20 &&
+      y + btnRect.height > containerRect.top - 20 &&
+      y < containerRect.bottom + 20
     );
-    
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-    
-    // Incrementar contador
-    escapeAttempts++;
-    counterNum.textContent = escapeAttempts;
-    clickCounter.style.display = 'block';
-    
-    // Agregar animación de rebote al contador
-    clickCounter.style.animation = 'none';
-    setTimeout(() => {
-        clickCounter.style.animation = 'bounce 0.5s ease';
-    }, 10);
-    
-    // Cambiar mensaje según intentos
-    updateNoButtonText();
+
+    if (!isOverContainer) break;
+
+  } while (attempts < maxAttempts);
+
+  noBtn.style.position = "fixed";
+  noBtn.style.left = `${Math.round(x)}px`;
+  noBtn.style.top  = `${Math.round(y)}px`;
+
+  // contador + animaciones
+  escapeAttempts++;
+  counterNum.textContent = escapeAttempts;
+  clickCounter.style.display = "block";
+
+  clickCounter.style.animation = "none";
+  setTimeout(() => {
+    clickCounter.style.animation = "bounce 0.5s ease";
+  }, 10);
+
+  updateNoButtonText();
 }
 
 function updateNoButtonText() {
