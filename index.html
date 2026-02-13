@@ -3,12 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¿Quieres ser mi Valentín?</title>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>💝 ¿Quieres ser mi Valentín? 💝</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700;900&family=Dancing+Script:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+
+<!-- Controles superiores -->
+<div class="top-controls">
+    <button id="themeToggle" class="control-btn" title="Cambiar tema">
+        <i class="fas fa-moon"></i>
+    </button>
+    <button id="musicToggle" class="control-btn" title="Música">
+        <i class="fas fa-music"></i>
+    </button>
+    <button id="volumeBtn" class="control-btn" title="Volumen">
+        <i class="fas fa-volume-up"></i>
+    </button>
+</div>
+
+<!-- Audio de fondo -->
+<audio id="bgMusic" loop>
+    <source src="https://stream.zeno.fm/f3wvbbqmdg8uv" type="audio/mpeg">
+</audio>
+
+<!-- Pétalos de rosa -->
+<div class="rose-petals" id="rosePetals"></div>
+
+<!-- Mariposas -->
+<div class="butterflies" id="butterflies"></div>
 
 <!-- Partículas de fondo -->
 <div class="particles" id="particles"></div>
@@ -16,18 +41,51 @@
 <!-- Estrellas brillantes -->
 <div class="stars" id="stars"></div>
 
-<div class="container">
-    <div class="heart-large">💝</div>
+<!-- Luciérnagas (modo noche) -->
+<div class="fireflies" id="fireflies"></div>
+
+<!-- Contador de San Valentín -->
+<div class="countdown-container" id="countdownContainer">
+    <div class="countdown-title">💕 Próximo San Valentín 💕</div>
+    <div class="countdown-timer" id="countdown">
+        <div class="time-unit">
+            <span class="time-value" id="days">00</span>
+            <span class="time-label">Días</span>
+        </div>
+        <div class="time-unit">
+            <span class="time-value" id="hours">00</span>
+            <span class="time-label">Horas</span>
+        </div>
+        <div class="time-unit">
+            <span class="time-value" id="minutes">00</span>
+            <span class="time-label">Min</span>
+        </div>
+        <div class="time-unit">
+            <span class="time-value" id="seconds">00</span>
+            <span class="time-label">Seg</span>
+        </div>
+    </div>
+</div>
+
+<!-- Contenedor principal -->
+<div class="container" id="mainContainer">
+    <div class="heart-large floating-heart">💝</div>
     
-    <h1>¿Quieres ser mi Valentín? 💘</h1>
-    <p class="subtitle">Hazme la persona más feliz del mundo ✨</p>
+    <h1 class="main-title">¿Quieres ser mi Valentín? 💘</h1>
+    <p class="subtitle glowing-text">Hazme la persona más feliz del mundo ✨</p>
     
-    <div class="rose-decoration">🌹 ✨ 🌹</div>
+    <div class="rose-decoration rotating-roses">� ✨ 🌼</div>
+    
+    <!-- Carrusel de mensajes románticos -->
+    <div class="love-carousel" id="loveCarousel">
+        <p class="carousel-message"></p>
+    </div>
     
     <div class="buttons-container">
         <button id="yesBtn" class="yes-button">
             <span class="button-text">¡Sí, por supuesto! 💖</span>
             <span class="button-glow"></span>
+            <span class="button-sparkles"></span>
         </button>
         <button id="noBtn" class="no-button">No 😢</button>
     </div>
@@ -36,13 +94,143 @@
         Intentos de escapar: <span id="counterNum">0</span> 😏
     </div>
     
+    <!-- Mensaje de éxito -->
     <div class="message" id="message">
         <div class="success-animation">
             <div class="emoji-large heartbeat">💕</div>
             <div class="message-text">¡Sabía que dirías que sí!</div>
-            <div class="message-text-sub">Eres la persona más especial del mundo 🌹</div>
+            <div class="message-text-sub">Eres la persona más especial del mundo �</div>
             <div class="message-text-sub">¡Seremos el mejor equipo! 💑</div>
             <div class="emoji-large sparkle">✨</div>
+            
+            <!-- Botones adicionales después de decir sí -->
+            <div class="post-yes-buttons">
+                <button id="showLetter" class="fancy-btn">
+                    <i class="fas fa-envelope-open-text"></i> Leer Carta de Amor
+                </button>
+                <button id="showGallery" class="fancy-btn">
+                    <i class="fas fa-images"></i> Ver Galería
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Carta de amor modal -->
+<div class="modal" id="letterModal">
+    <div class="modal-content letter-content">
+        <button class="close-modal" id="closeLetter">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="letter-paper">
+            <h2 class="letter-title">Para ti, mi amor 💌</h2>
+            <div class="letter-text">
+                <p>Querida Samantha,</p>
+                <p>Desde el momento en que te conocí, mi vida cambió por completo. Cada día a tu lado es un regalo que atesoro en mi corazón.</p>
+                <p>Eres la razón por la que sonrío cada mañana, la inspiración detrás de mis sueños y la luz que ilumina mis días más oscuros.</p>
+                <p>No hay palabras suficientes para expresar lo mucho que significas para mí. Tu risa es mi melodía favorita, tu sonrisa mi mayor tesoro.</p>
+                <p>Quiero pasar cada San Valentín contigo, creando memorias inolvidables y construyendo un futuro lleno de amor y felicidad.</p>
+                <p>Eres mi margarita más hermosa en el jardín de la vida. 🌼</p>
+                <p>Te amo más de lo que las palabras pueden expresar. 💕</p>
+                <p class="letter-signature">Con todo mi amor,<br><span class="signature-name">Tu Valentín</span></p>
+            </div>
+            <div class="letter-decoration">
+                <span class="letter-heart">❤️</span>
+                <span class="letter-heart">💕</span>
+                <span class="letter-heart">💖</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Galería modal -->
+<div class="modal" id="galleryModal">
+    <div class="modal-content gallery-content">
+        <button class="close-modal" id="closeGallery">
+            <i class="fas fa-times"></i>
+        </button>
+        <h2 class="gallery-title">💕 Nuestros Momentos Especiales 💕</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="fotos/foto1.jpg" alt="Momento especial 1" class="gallery-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="gallery-placeholder" style="display:none;">📸<br><span>Foto 1</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="fotos/foto2.jpg" alt="Momento especial 2" class="gallery-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="gallery-placeholder" style="display:none;">📸<br><span>Foto 2</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="fotos/foto3.jpg" alt="Momento especial 3" class="gallery-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="gallery-placeholder" style="display:none;">📸<br><span>Foto 3</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="fotos/foto4.jpg" alt="Momento especial 4" class="gallery-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="gallery-placeholder" style="display:none;">📸<br><span>Foto 4</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="fotos/foto5.jpg" alt="Momento especial 5" class="gallery-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="gallery-placeholder" style="display:none;">📸<br><span>Foto 5</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Timeline modal -->
+<div class="modal" id="timelineModal">
+    <div class="modal-content timeline-content">
+        <button class="close-modal" id="closeTimeline">
+            <i class="fas fa-times"></i>
+        </button>
+        <h2 class="timeline-title">💕 Nuestra Historia de Amor 💕</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content-box">
+                    <div class="timeline-date">🎯 Comienzo</div>
+                    <h3>El Día que Todo Cambió</h3>
+                    <p>Cuando nuestras miradas se cruzaron por primera vez y supe que eras especial.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content-box">
+                    <div class="timeline-date">💬 Primeras Palabras</div>
+                    <h3>Nuestra Primera Conversación</h3>
+                    <p>Horas que se sintieron como minutos, hablando de todo y de nada.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content-box">
+                    <div class="timeline-date">🌹 Primer Detalle</div>
+                    <h3>El Gesto que Me Derritió</h3>
+                    <p>Ese momento en que supe que había encontrado algo único.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content-box">
+                    <div class="timeline-date">❤️ Confesión</div>
+                    <h3>Te Abrí Mi Corazón</h3>
+                    <p>El día más vulnerable y hermoso de mi vida.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content-box">
+                    <div class="timeline-date">💑 Juntos</div>
+                    <h3>Nuestra Historia Continúa</h3>
+                    <p>Cada día juntos es un nuevo capítulo de nuestra historia de amor.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot active-dot"></div>
+                <div class="timeline-content-box active-box">
+                    <div class="timeline-date">💝 Hoy</div>
+                    <h3>Este San Valentín</h3>
+                    <p>El comienzo de muchos más momentos inolvidables juntos.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -50,6 +238,5 @@
 <script src="script.js"></script>
 
 </body>
-</html>
 </html>
   
