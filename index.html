@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Quieres ser mi Valentín?</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        font-family: 'Segoe UI', sans-serif;
+        overflow: hidden;
+    }
+
+    .container {
+        text-align: center;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+        color: #ff4d6d;
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        margin: 10px;
+        transition: 0.3s;
+        position: relative;
+    }
+
+    #yesBtn {
+        background-color: #ff4d6d;
+        color: white;
+    }
+
+    #yesBtn:hover {
+        background-color: #ff1e4d;
+        transform: scale(1.1);
+    }
+
+    #noBtn {
+        background-color: #999;
+        color: white;
+        position: absolute;
+    }
+
+    .message {
+        margin-top: 20px;
+        font-size: 20px;
+        color: #ff4d6d;
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>¿Quieres ser mi Valentín? 💘</h1>
+    <button id="yesBtn">Sí 💖</button>
+    <button id="noBtn">No 😢</button>
+    <div class="message" id="message">
+        Sabía que dirías que sí 💕  
+        ¡Eres la persona más especial del mundo! 🌹✨
+    </div>
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
+
+    // Mover el botón "No"
+    noBtn.addEventListener("mouseover", () => {
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 50);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    });
+
+    // Mostrar mensaje al presionar Sí
+    yesBtn.addEventListener("click", () => {
+        message.style.display = "block";
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
+    });
+</script>
+
+</body>
+</html>
