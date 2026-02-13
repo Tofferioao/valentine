@@ -179,7 +179,8 @@ Se crean nuevos pétalos cada 600ms
 
 - **Diseño y Desarrollo**: Mejorado con ❤️
 - **Música de Fondo**: [Pixabay Audio](https://pixabay.com/music/)
-- **Inspiración**: El amor y la creatividad
+- **Inspiración**: El proyecto del Kkcaicedo
+- 
 
 ## 📄 Licencia
 
